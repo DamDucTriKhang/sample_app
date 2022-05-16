@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   before_save { self.email = email.downcase }
 
@@ -32,7 +32,9 @@ class User < ApplicationRecord
 
   # Returns true if the given token matches the digest.
   def authenticated?(remember_token)
-    return false if remember_digest.nil? BCrypt::Password.new(remember_digest).is_password?(remember_token)
+    return false if remember_digest.nil?
+    
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
   # Forgets a user.
