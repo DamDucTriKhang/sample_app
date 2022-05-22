@@ -17,7 +17,7 @@ class PasswordResetsController < ApplicationController
       render 'new'
     end
   end
-  
+
   def edit
   end
 
@@ -46,7 +46,7 @@ class PasswordResetsController < ApplicationController
 
   # Confirms a valid user.
   def valid_user
-    unless (@user && @user.activated? && @user.authenticated?(:reset, params[:id]))
+    unless (@user&.activated? && @user.authenticated?(:reset, params[:id]))
     end
   end
 
